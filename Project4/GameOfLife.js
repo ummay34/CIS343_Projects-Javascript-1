@@ -86,17 +86,17 @@ class GameOfLife {
                 if (this.grid[x][y] === '1') {
                     //A Live cell with less than two live neighbors or more than three neighbors dies.
                     if (neighbors < 2 || neighbors > 3) {
-                        temp[x][y] = '0';
+                        temp[x][y] = 0;
                     }
                     //A live cell with two or three live neighbors lives.
                     if (neighbors === 2 || neighbors === 3) {
-                        temp[x][y] = '1';
+                        temp[x][y] = 1;
                     }
                 } else {
 
                     //A dead cell with three live neighbors become alive.
                     if (neighbors === 3) {
-                        temp[x][y] = '1';
+                        temp[x][y] = 1;
                     }
 
                 }
