@@ -83,7 +83,7 @@ class GameOfLife {
                 let neighbors = this.getNeighbors(x, y);
 
                 //if the cell is currently alive
-                if (this.grid[x][y] === '1') {
+                if (this.grid[x][y] === 1) {
                     //A Live cell with less than two live neighbors or more than three neighbors dies.
                     if (neighbors < 2 || neighbors > 3) {
                         temp[x][y] = 0;
