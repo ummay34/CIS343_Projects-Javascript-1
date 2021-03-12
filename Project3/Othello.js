@@ -2,7 +2,7 @@
 
 /**
  * Othello game
- * Author(s): Your Name(s)
+ * Author(s): Ummayair Ahmad, Kyle Jacobson
  */
 
 class Othello {
@@ -67,9 +67,39 @@ class Othello {
 
   	// Initializes the board with start configuration of discs (as per project specs)
 	initializeBoard() {
+		// Iterate through the rows of the board.
+		for (let i = 0; i < this.board.size; i++) {
+			// Iterate through the columns of the board.
+			for (let j = 0; j < this.board.size; j++) {
+				// Empty spaces will be identified with a hyphen.
+				this.board[i][j] = '-';
+			}
+		}
 
-		// TO DO: COMPLETE THIS METHOD
-
+		// Switch used for initializing different board sizes.
+		switch (this.board.size) {
+			// 4x4 initial board layout.
+			case 4:
+				this.board[1][1] = 'B';
+				this.board[2][1] = 'W';
+				this.board[1][2] = 'W';
+				this.board[2][2] = 'B';
+				break;
+			// 6x6 initial board layout.
+			case 6:
+				this.board[2][2] = 'B';
+				this.board[3][2] = 'W';
+				this.board[2][3] = 'W';
+				this.board[3][3] = 'B';
+				break;
+			// 8x8 initial board layout.
+			case 8:
+				this.board[3][3] = 'B';
+				this.board[4][3] = 'W';
+				this.board[3][4] = 'W';
+				this.board[4][4] = 'B';
+				break;
+		}
   	}
 
 	// Returns true if placing the disc of current player at row,col is valid; else returns false
@@ -77,15 +107,15 @@ class Othello {
 		return this.isValidMoveForDisc(row, col, this.disc);
 	}
 
-	// Returns true if placing the specified disc at row,col is valid; else returns false
-	isValidMoveForDisc(row, col, disc) {
+    // Returns true if placing the specified disc at row,col is valid; else returns false
+    isValidMoveForDisc(row, col, disc) {
 
-		// TO DO: COMPLETE THIS PART OF THE METHOD
+        // TO DO: COMPLETE THIS PART OF THE METHOD
 
 
-		// DO NOT DELETE - if control reaches this statement, then it is not a valid move
-		return false;	// not a valid move
-	}
+        // DO NOT DELETE - if control reaches this statement, then it is not a valid move
+        return false;	// not a valid move
+    }
 
 	// Places the disc of current player at row,col and flips the opponent discs as needed
 	placeDiscAt(row, col) {
@@ -130,16 +160,24 @@ class Othello {
 
 		// TO DO: COMPLETE THIS PART OF THE METHOD
 
-		
+
 		// DO NOT DELETE - if control reaches this statement, then a valid move is not available
 		return false;	// not a valid move
 	}
 
 	// Returns true if the board is fully occupied with discs; else returns false
 	isBoardFull() {
-
-		// TO DO: COMPLETE THIS PART OF THE METHOD
-
+		// Iterate through the rows of the board.
+		for (let i = 0; i < this.board.size; i++) {
+			// Iterate through the columns of the board.
+			for (let j = 0; j < this.board.size; j++) {
+				// If the board has empty spaces, return false.
+				if (this.board[i][j] === '-') {
+					return false;
+				}
+			}
+		}
+		// If the board is full, return true.
 		return true;
 	}
 
@@ -153,9 +191,43 @@ class Othello {
 	// If there is a winner, it returns Othello.WHITE or Othello.BLACK.
 	// In case of a tie, it returns Othello.TIE
 	checkWinner() {
+		// Counts the amount of points allocated to each player.
+		let whitePoints = 0;
+		let blackPoints = 0;
 
-		// TO DO: COMPLETE THIS METHOD
-		
+		// If the game is not over, return 0.
+		if (!this.isGameOver(this.board.size, this.board)) {
+			return 0;
+		}
+
+		// Iterate through the rows of the board.
+		for (let i = 0; i < this.board.size; i++) {
+			// Iterate through the columns of the board.
+			for (let j = 0; j < this.board.size; j++) {
+				// If the space contains a white disc, add one point.
+				if (this.board[i][j] === 'W') {
+					whitePoints++;
+				}
+
+				// If the space contains a black disc, add one point.
+				else if (this.board[i][j] === 'B') {
+					blackPoints++;
+				}
+			}
+		}
+
+		// If player "White" has more points than player "Black", return "White" as winner.
+		if (whitePoints > blackPoints) {
+			return 'W';
+		}
+
+		// If player "Black" has more points than player "White", return "Black" as winner.
+		else if (whitePoints < blackPoints) {
+			return 'B';
+		}
+
+		// Otherwise, declare a tie.
+		return 'T';
 	}
 
 	// Returns a string representation of the board (for display purposes)
