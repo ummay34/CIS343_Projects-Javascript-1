@@ -45,8 +45,8 @@ class GameOfLife {
         }
 
         //assigning values from file to grid
-        for(let temp = 0; temp < this.rows; temp++){
-            for(let j = 0; j < this.cols; j++){
+        for (let temp = 0; temp < this.rows; temp++) {
+            for (let j = 0; j < this.cols; j++) {
                 this.grid[temp][j] = parseInt(tokens.shift()[0]);
             }
         }
@@ -60,8 +60,8 @@ class GameOfLife {
         let data = this.rows + ' ' + this.cols;
 
         // TO DO: append the values in this.grid to data
-        for(let temp = 0; temp < this.rows; temp++){
-            for(let j = 0; j < this.cols; j++){
+        for (let temp = 0; temp < this.rows; temp++) {
+            for (let j = 0; j < this.cols; j++) {
                 data = data + " " + this.grid[temp][j];
             }
         }
@@ -78,9 +78,31 @@ class GameOfLife {
             temp[i].fill(0);
         }
 
-        // TO DO: using values in this.grid, set temp grid to next generation
+        for (let x = 0; x < this.rows; x++) {
+            for (let y = 0; y < this.cols; y++) {
+                let neighbors = this.getNeighbors(x, y);
 
+                //if the cell is currently alive
+                if (this.grid[x][y] === '1') {
+                    //A Live cell with less than two live neighbors or more than three neighbors dies.
+                    if (neighbors < 2 || neighbors > 3) {
+                        temp[x][y] = '0';
+                    }
+                    //A live cell with two or three live neighbors lives.
+                    if (neighbors === 2 || neighbors === 3) {
+                        temp[x][y] = '1';
+                    }
+                } else {
 
+                    //A dead cell with three live neighbors become alive.
+                    if (neighbors === 3) {
+                        temp[x][y] = '1';
+                    }
+
+                }
+
+            }
+        }
         // set this.grid to temp grid
         this.grid = temp;
     }
@@ -88,9 +110,9 @@ class GameOfLife {
     // Returns the number of neighbors for cell at this.grid[i][j]
     getNeighbors(x, y) {
         let neighbors = 0;
-        for(let i = -1; i < 2; i++){
-            for(let j = -1; j < 2; j++){
-                let col = (x + i +this.cols) % this.cols;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                let col = (x + i + this.cols) % this.cols;
                 let row = (y + j + this.rows) % this.rows;
                 neighbors = neighbors + this.grid[col][row]
             }
