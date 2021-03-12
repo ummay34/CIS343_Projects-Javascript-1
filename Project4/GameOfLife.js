@@ -13,6 +13,7 @@ const fs = require('fs');
 // Class that represents Game of Life
 class GameOfLife {
 
+
     // Constructor that sets up instance variables with default values
     constructor() {
         this.grid = [];
@@ -24,18 +25,33 @@ class GameOfLife {
     // grid with data from file. Sets this.grid, this.rows, and
     // this.cols instance variables for later use.
     loadGrid(file) {
+        //read file
         let data = fs.readFileSync(file, 'utf8');
+
+        //split using delimiter
         let tokens = data.split(' ');
 
+        //Get number of rows from the line read
         this.rows = parseInt(tokens.shift());
+
+        //Get number of cols from the line read
         this.cols = parseInt(tokens.shift());
+
+        //making empty 2d array grid
         this.grid = new Array(this.rows);
         for (let i = 0; i < this.rows; i++) {
             this.grid[i] = new Array(this.cols);
             this.grid[i].fill(0);
         }
 
-        // TO DO: Fill this.grid with the remaining values in the tokens array
+        //assigning values from file to grid
+        for(let temp = 0; temp < this.rows; temp++){
+            for(let j = 0; j < this.cols; j++){
+                this.grid[temp][j] = parseInt(tokens.shift()[0]);
+            }
+        }
+
+        return this.grid;
 
     }
 
@@ -68,9 +84,14 @@ class GameOfLife {
     // Returns the number of neighbors for cell at this.grid[i][j]
     getNeighbors(i, j) {
         let neighbors = 0;
-
-        // TO DO: determine number of neighbors of cell at this.grid[i][j]
-        
+        for(let i = -1; i < 2; i++){
+            for(let j = -1; j < 2; j++){
+                let col = (x + i +this.cols) % this.cols;
+                let row = (y + j + this.rows) % this.rows;
+                neighbors = neighbors + this.grid[col][row]
+            }
+        }
+        neighbors -= this.grid[i][j];
         return neighbors;
     }
 
