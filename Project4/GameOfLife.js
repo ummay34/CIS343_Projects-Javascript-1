@@ -60,7 +60,11 @@ class GameOfLife {
         let data = this.rows + ' ' + this.cols;
 
         // TO DO: append the values in this.grid to data
-
+        for(let temp = 0; temp < this.rows; temp++){
+            for(let j = 0; j < this.cols; j++){
+                data = data + " " + this.grid[temp][j];
+            }
+        }
         data += '\n';
         fs.writeFileSync(file, data);
     }
