@@ -82,7 +82,7 @@ class GameOfLife {
     }
 
     // Returns the number of neighbors for cell at this.grid[i][j]
-    getNeighbors(i, j) {
+    getNeighbors(x, y) {
         let neighbors = 0;
         for(let i = -1; i < 2; i++){
             for(let j = -1; j < 2; j++){
@@ -91,7 +91,7 @@ class GameOfLife {
                 neighbors = neighbors + this.grid[col][row]
             }
         }
-        neighbors -= this.grid[i][j];
+        neighbors -= this.grid[x][y];
         return neighbors;
     }
 
