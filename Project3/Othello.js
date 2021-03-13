@@ -68,16 +68,16 @@ class Othello {
   	// Initializes the board with start configuration of discs (as per project specs)
 	initializeBoard() {
 		// Iterate through the rows of the board.
-		for (let i = 0; i < this.board.size; i++) {
+		for (let i = 0; i < this.size; i++) {
 			// Iterate through the columns of the board.
-			for (let j = 0; j < this.board.size; j++) {
+			for (let j = 0; j < this.size; j++) {
 				// Empty spaces will be identified with a hyphen.
 				this.board[i][j] = '-';
 			}
 		}
 
 		// Switch used for initializing different board sizes.
-		switch (this.board.size) {
+		switch (this.size) {
 			// 4x4 initial board layout.
 			case 4:
 				this.board[1][1] = 'B';
@@ -109,10 +109,147 @@ class Othello {
 
     // Returns true if placing the specified disc at row,col is valid; else returns false
     isValidMoveForDisc(row, col, disc) {
+		// Represents the opponent's disc color regarding the current player.
+		let opponentDisc = this.prepareNextTurn(disc);
 
-        // TO DO: COMPLETE THIS PART OF THE METHOD
+		// If the current move is out of range on the board, return false.
+		if (row > this.size || col > this.size || row < 0 || col < 0) {
+			return false;
+		}
 
+		// If the current space is occupied by a disc, return false.
+		if (this.board[row][col] !== '-') {
+			return false;
+		}
 
+		// Checks if adjacent space is occupied by opponent.
+		if (this.board[row][col - 1] === opponentDisc) {
+			// Iterates through the left spaces.
+			for (let i = col - 2; i >= 0; i--) {
+				// If the space is empty, break from the process.
+				if (this.board[row][i] === '-') {
+					break;
+				}
+
+				// If space contains disc, move is valid.
+				else if (this.board[row][i] === disc) {
+					return true;
+				}
+			}
+		}
+
+		// Checks if adjacent space is occupied by opponent.
+		if (this.board[row + 1][col] === opponentDisc) {
+			// Iterates through the down spaces.
+			for (let i = row + 2; i <= this.size; i++) {
+				// If the space is empty, break from the process.
+				if (this.board[i][col] === '-') {
+					break;
+				}
+
+				// If space contains disc, move is valid.
+				else if (this.board[i][col] === disc) {
+					return true;
+				}
+			}
+		}
+
+		// // Checks if adjacent space is occupied by opponent.
+		// if (this.board[row][col + 1] === this.disc) {
+		// 	// Iterates through the right spaces.
+		// 	for (let i = col + 2; i < this.size; i++) {
+		// 		// If the space is empty, break from the process.
+		// 		if (this.board[row][i] === '-') {
+		// 			break;
+		// 		}
+		//
+		// 		// If space contains disc, move is valid.
+		// 		else if (this.board[row][i] === disc) {
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		//
+		// // Checks if adjacent space is occupied by opponent.
+		// if (this.board[row - 1][col] === this.disc) {
+		// 	// Iterates through the up spaces.
+		// 	for (let i = row - 2; i >= 0; i--) {
+		// 		// If the space is empty, break from the process.
+		// 		if (this.board[i][col] === '-') {
+		// 			break;
+		// 		}
+		//
+		// 		// If space contains disc, move is valid.
+		// 		else if (this.board[i][col] === disc) {
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		//
+		// // Checks if adjacent space is occupied by opponent.
+		// if (this.board[row - 1][col + 1] === this.disc) {
+		// 	// Iterates through the up-right spaces.
+		// 	for (let i = row - 2, j = col - 2; i >= 0 && j >= 0; i--, j--) {
+		// 		// If the space is empty, break from the process.
+		// 		if (this.board[i][j] === '-') {
+		// 			break;
+		// 		}
+		//
+		// 		// If space contains disc, move is valid.
+		// 		else if (this.board[i][j] === disc) {
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		//
+		// // Checks if adjacent space is occupied by opponent.
+		// if (this.board[row + 1][col - 1] === this.disc) {
+		// 	// Iterates through the down-left spaces.
+		// 	for (let i = row + 2, j = col - 2; i <= this.size && j >= 0; i++, j--) {
+		// 		// If the space is empty, break from the process.
+		// 		if (this.board[i][j] === '-') {
+		// 			break;
+		// 		}
+		//
+		// 		// If space contains disc, move is valid.
+		// 		else if (this.board[i][j] === disc) {
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		//
+		// // Checks if adjacent space is occupied by opponent.
+		// if (this.board[row - 1][col + 1] === this.disc) {
+		// 	// Iterates through the up-right spaces.
+		// 	for (let i = row - 2, j = col + 2; i >= 0 && j <= this.size; i--, j++) {
+		// 		// If the space is empty, break from the process.
+		// 		if (this.board[i][j] === '-') {
+		// 			break;
+		// 		}
+		//
+		// 		// If space contains disc, move is valid.
+		// 		else if (this.board[i][j] === disc) {
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		//
+		// // Checks if adjacent space is occupied by opponent.
+		// if (this.board[row + 1][col + 1] === this.disc) {
+		// 	// Iterates through the down-right spaces.
+		// 	for (let i = row + 2, j = col + 2; i <= this.size && j <= this.size; i++, j++) {
+		// 		// If the space is empty, break from the process.
+		// 		if (this.board[i][j] === '-') {
+		// 			break;
+		// 		}
+		//
+		// 		// If space contains disc, move is valid.
+		// 		else if (this.board[i][j] === disc) {
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		
         // DO NOT DELETE - if control reaches this statement, then it is not a valid move
         return false;	// not a valid move
     }
@@ -157,8 +294,19 @@ class Othello {
 
 	// Returns true if a valid move for the specified disc is available; else returns false
 	isValidMoveAvailableForDisc(disc) {
-
-		// TO DO: COMPLETE THIS PART OF THE METHOD
+		// Iterate through the rows of the board.
+		for (let i = 0; i < this.size; i++) {
+			// Iterate through the columns of the board.
+			for (let j = 0; j < this.size; j++) {
+				// Checks if space is currently empty.
+				if (this.board[i][j] === '-') {
+					// If the move is valid, return true.
+					if (this.isValidMove(this.size, this.board, i, j, disc) === true) {
+						return true;
+					}
+				}
+			}
+		}
 
 
 		// DO NOT DELETE - if control reaches this statement, then a valid move is not available
@@ -168,9 +316,9 @@ class Othello {
 	// Returns true if the board is fully occupied with discs; else returns false
 	isBoardFull() {
 		// Iterate through the rows of the board.
-		for (let i = 0; i < this.board.size; i++) {
+		for (let i = 0; i < this.size; i++) {
 			// Iterate through the columns of the board.
-			for (let j = 0; j < this.board.size; j++) {
+			for (let j = 0; j < this.size; j++) {
 				// If the board has empty spaces, return false.
 				if (this.board[i][j] === '-') {
 					return false;
@@ -196,14 +344,14 @@ class Othello {
 		let blackPoints = 0;
 
 		// If the game is not over, return 0.
-		if (!this.isGameOver(this.board.size, this.board)) {
+		if (!this.isGameOver(this.size, this.board)) {
 			return 0;
 		}
 
 		// Iterate through the rows of the board.
-		for (let i = 0; i < this.board.size; i++) {
+		for (let i = 0; i < this.size; i++) {
 			// Iterate through the columns of the board.
-			for (let j = 0; j < this.board.size; j++) {
+			for (let j = 0; j < this.size; j++) {
 				// If the space contains a white disc, add one point.
 				if (this.board[i][j] === 'W') {
 					whitePoints++;
