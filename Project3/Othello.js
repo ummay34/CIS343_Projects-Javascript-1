@@ -173,9 +173,6 @@ class Othello {
     placeDiscAt(row, col) {
         let opponentDisc = this.getOpponentDisc()
 
-        if (!this.isValidMove(row, col)) {
-            return;
-        }
 
         // If move is valid, run through board game process.
         if (this.isValidMove(row, col, this.disc)) {
