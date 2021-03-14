@@ -166,6 +166,7 @@ class Othello {
 
         // If move is valid, run through board game process.
         if (this.isValidMove(row, col, this.disc)) {
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row, col - 1)) {
                 // Checks if adjacent space is occupied by opponent.
                 if (this.board[row][col - 1] === opponentDisc) {
@@ -186,6 +187,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row + 1, col)) {
                 // Reassign right spaces to current player when appropriate.
                 if (this.board[row + 1][col] === opponentDisc) {
@@ -206,6 +208,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row, col + 1)) {
                 // Reassign down spaces to current player when appropriate.
                 if (this.board[row][col + 1] === opponentDisc) {
@@ -226,6 +229,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row - 1, col)) {
                 // Reassign left spaces to current player when appropriate.
                 if (this.board[row - 1][col] === opponentDisc) {
@@ -246,6 +250,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row - 1, col + 1)) {
                 // Reassign up-left spaces to current player when appropriate.
                 if (this.board[row - 1][col + 1] === opponentDisc) {
@@ -266,6 +271,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row + 1, col - 1)) {
                 // Reassign up-right spaces to current player when appropriate.
                 if (this.board[row + 1][col - 1] === opponentDisc) {
@@ -286,6 +292,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row - 1, col + 1)) {
                 // Reassign down-left spaces to current player when appropriate.
                 if (this.board[row - 1][col + 1] === opponentDisc) {
@@ -306,6 +313,7 @@ class Othello {
                 }
             }
 
+            // Checks if the directional iteration is within bounds.
             if (this.checkBounds(row + 1, col - 1)) {
                 // Reassign down-right spaces to current player when appropriate.
                 if (this.board[row + 1][col - 1] === opponentDisc) {
