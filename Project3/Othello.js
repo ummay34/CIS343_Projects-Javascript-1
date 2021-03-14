@@ -157,28 +157,15 @@ class Othello {
         return false;	// not a valid move
     }
 
-    getOpponentDisc(disc) {
-        // If player "Black" is currently playing, return "White".
-        if (disc === 'B') {
-            return 'W';
-        }
-
-        // If player "White" is currently playing, return "Black".
-        else {
-            return 'B';
-        }
-    }
-
     // Places the disc of current player at row,col and flips the opponent discs as needed
     placeDiscAt(row, col) {
-        let opponentDisc = this.getOpponentDisc()
+        let opponentDisc = this.prepareNextTurn()
 
+        // Place the current player's disc at row,col.
+        this.board[row][col] = this.disc;
 
         // If move is valid, run through board game process.
         if (this.isValidMove(row, col, this.disc)) {
-            // Place the current player's disc at row,col.
-            this.board[row][col] = this.disc;
-
             if (this.checkBounds(row, col - 1)) {
                 // Checks if adjacent space is occupied by opponent.
                 if (this.board[row][col - 1] === opponentDisc) {
@@ -199,7 +186,6 @@ class Othello {
                 }
             }
 
-
             if (this.checkBounds(row + 1, col)) {
                 // Reassign right spaces to current player when appropriate.
                 if (this.board[row + 1][col] === opponentDisc) {
@@ -219,7 +205,6 @@ class Othello {
                     }
                 }
             }
-
 
             if (this.checkBounds(row, col + 1)) {
                 // Reassign down spaces to current player when appropriate.
