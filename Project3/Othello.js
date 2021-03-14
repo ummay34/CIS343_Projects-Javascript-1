@@ -157,164 +157,188 @@ class Othello {
         return false;	// not a valid move
     }
 
+    getOpponentDisc(disc) {
+        // If player "Black" is currently playing, return "White".
+        if (disc === 'B') {
+            return 'W';
+        }
+
+        // If player "White" is currently playing, return "Black".
+        else {
+            return 'B';
+        }
+    }
+
     // Places the disc of current player at row,col and flips the opponent discs as needed
     placeDiscAt(row, col) {
-        let opponentDisc = '';
-
-        if (this.disc === 'B') {
-            opponentDisc = 'W';
-        } else {
-            opponentDisc = 'B';
-        }
+        let opponentDisc = this.getOpponentDisc()
 
         if (!this.isValidMove(row, col)) {
             return;
         }
 
-        // place the current player's disc at row,col
-        this.board[row][col] = this.disc;
-
         // If move is valid, run through board game process.
         if (this.isValidMove(row, col, this.disc)) {
-            // Checks if adjacent space is occupied by opponent.
-            if (this.board[row][col - 1] === opponentDisc) {
-                // Iterates through the left spaces.
-                for (let i = col - 2; i >= 0; i--) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[row][i] === '-') {
-                        break;
-                    }
+            // Place the current player's disc at row,col.
+            this.board[row][col] = this.disc;
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[row][i] === this.disc) {
-                        for (let j = col - 1; j >= i; j--) {
-                            this.board[row][j] = this.disc;
+            if (this.checkBounds(row, col - 1)) {
+                // Checks if adjacent space is occupied by opponent.
+                if (this.board[row][col - 1] === opponentDisc) {
+                    // Iterates through the left spaces.
+                    for (let i = col - 2; i >= 0; i--) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[row][i] === '-') {
+                            break;
+                        }
+
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[row][i] === this.disc) {
+                            for (let j = col - 1; j >= i; j--) {
+                                this.board[row][j] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign right spaces to current player when appropriate.
-            if (this.board[row + 1][col] === opponentDisc) {
-                // Iterates through the down spaces.
-                for (let i = row + 2; i <= this.size; i++) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[i][col] === '-') {
-                        break;
-                    }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[i][col] === this.disc) {
-                        for (let j = row + 1; j <= i; j++) {
-                            this.board[j][col] = this.disc;
+            if (this.checkBounds(row + 1, col)) {
+                // Reassign right spaces to current player when appropriate.
+                if (this.board[row + 1][col] === opponentDisc) {
+                    // Iterates through the down spaces.
+                    for (let i = row + 2; i <= this.size; i++) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[i][col] === '-') {
+                            break;
+                        }
+
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[i][col] === this.disc) {
+                            for (let j = row + 1; j <= i; j++) {
+                                this.board[j][col] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign down spaces to current player when appropriate.
-            if (this.board[row][col + 1] === opponentDisc) {
-                // Iterates through the right spaces.
-                for (let i = col + 2; i <= this.size; i++) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[row][i] === '-') {
-                        break;
-                    }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[row][i] === this.disc) {
-                        for (let j = col + 1; j <= i; j++) {
-                            this.board[row][j] = this.disc;
+            if (this.checkBounds(row, col + 1)) {
+                // Reassign down spaces to current player when appropriate.
+                if (this.board[row][col + 1] === opponentDisc) {
+                    // Iterates through the right spaces.
+                    for (let i = col + 2; i <= this.size; i++) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[row][i] === '-') {
+                            break;
+                        }
+
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[row][i] === this.disc) {
+                            for (let j = col + 1; j <= i; j++) {
+                                this.board[row][j] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign left spaces to current player when appropriate.
-            if (this.board[row - 1][col] === opponentDisc) {
-                // Iterates through the up spaces.
-                for (let i = row - 2; i >= 0; i--) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[i][col] === '-') {
-                        break;
-                    }
+            if (this.checkBounds(row - 1, col)) {
+                // Reassign left spaces to current player when appropriate.
+                if (this.board[row - 1][col] === opponentDisc) {
+                    // Iterates through the up spaces.
+                    for (let i = row - 2; i >= 0; i--) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[i][col] === '-') {
+                            break;
+                        }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[i][col] === this.disc) {
-                        for (let j = row - 1; j >= i; j--) {
-                            this.board[j][col] = this.disc;
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[i][col] === this.disc) {
+                            for (let j = row - 1; j >= i; j--) {
+                                this.board[j][col] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign up-left spaces to current player when appropriate.
-            if (this.board[row - 1][col + 1] === opponentDisc) {
-                // Iterates through the up-right spaces.
-                for (let i = row - 2, j = col - 2; i >= 0 && j >= 0; i--, j--) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[i][j] === '-') {
-                        break;
-                    }
+            if (this.checkBounds(row - 1, col + 1)) {
+                // Reassign up-left spaces to current player when appropriate.
+                if (this.board[row - 1][col + 1] === opponentDisc) {
+                    // Iterates through the up-right spaces.
+                    for (let i = row - 2, j = col - 2; i >= 0 && j >= 0; i--, j--) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[i][j] === '-') {
+                            break;
+                        }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[i][j] === this.disc) {
-                        for (let k = row - 1, l = col - 1; k >= i && l >= j; k--, l--) {
-                            this.board[k][l] = this.disc;
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[i][j] === this.disc) {
+                            for (let k = row - 1, l = col - 1; k >= i && l >= j; k--, l--) {
+                                this.board[k][l] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign up-right spaces to current player when appropriate.
-            if (this.board[row + 1][col - 1] === opponentDisc) {
-                // Iterates through the down-left spaces.
-                for (let i = row + 2, j = col - 2; i <= this.size && j >= 0; i++, j--) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[i][j] === '-') {
-                        break;
-                    }
+            if (this.checkBounds(row + 1, col - 1)) {
+                // Reassign up-right spaces to current player when appropriate.
+                if (this.board[row + 1][col - 1] === opponentDisc) {
+                    // Iterates through the down-left spaces.
+                    for (let i = row + 2, j = col - 2; i <= this.size && j >= 0; i++, j--) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[i][j] === '-') {
+                            break;
+                        }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[i][j] === this.disc) {
-                        for (let k = row + 1, l = col - 1; k <= i && l >= j; k++, l--) {
-                            this.board[k][l] = this.disc;
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[i][j] === this.disc) {
+                            for (let k = row + 1, l = col - 1; k <= i && l >= j; k++, l--) {
+                                this.board[k][l] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign down-left spaces to current player when appropriate.
-            if (this.board[row - 1][col + 1] === opponentDisc) {
-                // Iterates through the up-left spaces.
-                for (let i = row - 2, j = col + 2; i >= 0 && j <= this.size; i--, j++) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[i][j] === '-') {
-                        break;
-                    }
+            if (this.checkBounds(row - 1, col + 1)) {
+                // Reassign down-left spaces to current player when appropriate.
+                if (this.board[row - 1][col + 1] === opponentDisc) {
+                    // Iterates through the up-left spaces.
+                    for (let i = row - 2, j = col + 2; i >= 0 && j <= this.size; i--, j++) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[i][j] === '-') {
+                            break;
+                        }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[i][j] === this.disc) {
-                        for (let k = row - 1, l = col + 1; k >= i && l <= j; k--, l++) {
-                            this.board[k][l] = this.disc;
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[i][j] === this.disc) {
+                            for (let k = row - 1, l = col + 1; k >= i && l <= j; k--, l++) {
+                                this.board[k][l] = this.disc;
+                            }
                         }
                     }
                 }
             }
 
-            // Reassign down-right spaces to current player when appropriate.
-            if (this.board[row + 1][col - 1] === opponentDisc) {
-                // Iterates through the down-right spaces.
-                for (let i = row + 2, j = col + 2; i <= this.size && j <= this.size; i++, j++) {
-                    // When an empty space is encountered, break from process.
-                    if (this.board[i][j] === '-') {
-                        break;
-                    }
+            if (this.checkBounds(row + 1, col - 1)) {
+                // Reassign down-right spaces to current player when appropriate.
+                if (this.board[row + 1][col - 1] === opponentDisc) {
+                    // Iterates through the down-right spaces.
+                    for (let i = row + 2, j = col + 2; i <= this.size && j <= this.size; i++, j++) {
+                        // When an empty space is encountered, break from process.
+                        if (this.board[i][j] === '-') {
+                            break;
+                        }
 
-                    // Add current player's disc on board when appropriate.
-                    else if (this.board[i][j] === this.disc) {
-                        for (let k = row + 1, l = col + 1; k >= i && l >= j; k++, l++) {
-                            this.board[k][l] = this.disc;
+                        // Add current player's disc on board when appropriate.
+                        else if (this.board[i][j] === this.disc) {
+                            for (let k = row + 1, l = col + 1; k >= i && l >= j; k++, l++) {
+                                this.board[k][l] = this.disc;
+                            }
                         }
                     }
                 }
@@ -446,4 +470,5 @@ class Othello {
     }
 }
 
-module.exports = Othello;
+module
+    .exports = Othello;
